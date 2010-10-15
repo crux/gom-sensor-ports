@@ -2,18 +2,21 @@ module Gom
   class SensorPorts < Gom::Remote::Entry
 
     Defaults = {
+      :logfile      => '-',
       :interface    => '0.0.0.0',
       :sensor_port  => 76001,
       :mode         => :udp,
     }
 
     include OAttr
-    oattr :interface, :sensor_port, :mode
+    oattr :logfile, :interface, :sensor_port, :mode
 
     def initialize path, options = {}
       @path = path
       @options = Defaults.merge(gnode @path).merge(options)
       puts " -- new sensor port: #{self.inspect}"
+
+      redirect_to logfile
     end
 
     def listen
@@ -25,8 +28,9 @@ module Gom
       socket = UDPSocket.new
       socket.bind(interface, sensor_port)
       loop do
-        msg, sender = socket.recvfrom(1024)
-        puts "-->#{msg}<-- #{sender.inspect}"
+        val, sender = socket.recvfrom(1024)
+        puts "-->#{val}<-- #{sender.inspect}"
+        connection.write "#{@path}:current_value", val.to_s
       end
     ensure
       socket.close rescue nil
@@ -40,6 +44,24 @@ module Gom
       #t.login(user, password) { |c| puts c }
       "not implemented"
     end
+
+    def redirect_to logfile
+      (@logfile_fd && @logfile_fd.close) rescue nil
+      puts " -- redirecting stdout/stderr to: #{logfile}"
+      if logfile == '-'
+        if @stdout
+          $stderr, $stdout = @stdout, @stderr
+        end
+      else
+        @stderr, @stdout = $stdout, $stderr
+        @logfile_fd = File.open(logfile, File::WRONLY|File::APPEND|File::CREAT)
+        @logfile_fd.sync = true
+        $stderr = $stdout = @logfile_fd
+      end
+      # first line after redirect
+      puts " -- daemon logile redirect at #{Time.now}"
+    end
+
   end
 end
 
