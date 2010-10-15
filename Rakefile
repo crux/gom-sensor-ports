@@ -5,12 +5,19 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "gom-sensor-ports"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "dirk@sebrink.de"
+    gem.summary = %Q{gateway for barebone TCP/UCP reporting sensors to GOM/HTTP protocoll}
+    gem.description = %Q{This gems implements a gateway server to allow
+    barebone basic sensor components to report state change updates as simple
+    protocol free udates over TCP/UDP ports without the 'overhead' of the HTTP
+    protocoll. For example, a power sensor might just broadcast a four byte
+    floating point binary number once every second to an UCP port}
+    gem.email = "dirk.luesebrink@gmail.com"
     gem.homepage = "http://github.com/crux/gom-sensor-ports"
-    gem.authors = ["dirk luesebrink"]
+    gem.authors = ["art+com AG/dirk luesebrink"]
+
     gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_runtime_dependency "applix"
+    gem.add_runtime_dependency "gom-script"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
