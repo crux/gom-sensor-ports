@@ -30,7 +30,8 @@ module Gom
       loop do
         val, sender = socket.recvfrom(1024)
         puts "-->#{val}<-- #{sender.inspect}"
-        connection.write "#{@path}:current_value", val.to_s
+        # TODO: val might need type conversion
+        gom.write "#{@path}:current_value", val.to_s.strip
       end
     ensure
       socket.close rescue nil
