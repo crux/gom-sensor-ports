@@ -2,12 +2,13 @@ module Gom
   class SensorPorts < Gom::Remote::Entry
 
     Defaults = {
-      :port   => 99123,
-      :mode   =>  :udp,
+      :interface  => '0.0.0.0',
+      :port       => 99123,
+      :mode       => :udp,
     }
 
     include OAttr
-    oattr :port, :mode
+    oattr :interface, :port, :mode
 
     def initialize path, options = {}
       @path = path
@@ -22,7 +23,7 @@ module Gom
 
     def listen_udp
       socket = UDPSocket.new
-      socket.bind(nil, port)
+      socket.bind(interface, port)
       loop do
         msg, sender = socket.recvfrom(1024)
         puts "-->#{msg}<-- #{sender.inspect}"
