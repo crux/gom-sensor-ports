@@ -19,3 +19,9 @@ rdoc
 pkg
 
 ## PROJECT::SPECIFIC
+*.sw?
+.DS_Store
+coverage
+rdoc
+pkg
+*.gemspec
