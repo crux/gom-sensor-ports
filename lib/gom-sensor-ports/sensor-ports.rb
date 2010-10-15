@@ -7,7 +7,7 @@ module Gom
     }
 
     include OAttr
-    oattr :port, :user, :password
+    oattr :port, :mode
 
     def initialize path, options = {}
       @path = path
@@ -16,7 +16,19 @@ module Gom
     end
 
     def listen
-      puts "listen.."
+      puts " -- listen: #{self.inspect}"
+      self.send "listen_#{mode}"
+    end
+
+    def listen_udp
+      socket = UDPSocket.new
+      socket.bind(nil, port)
+      loop do
+        msg, sender = socket.recvfrom(1024)
+        puts "-->#{msg}<-- #{sender.inspect}"
+      end
+    ensure
+      socket.close rescue nil
     end
 
     def status
@@ -29,3 +41,4 @@ module Gom
     end
   end
 end
+
