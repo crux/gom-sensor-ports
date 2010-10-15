@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'applix'
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'gom-sensor-ports'
+
+#Thread.abort_on_exception = true
+$stderr.sync = true
+$stdout.sync = true
+
+class Usage < ArgumentError; end
+
+def main argv
+  options = Hash.from_argv argv
+  args = (options.delete :args)
+  #options[:callback_port] ||= 32119
+
+  sensor_url = args.shift
+  sensor_url or (raise Usage, "no <sensor_url>")
+  puts " -- starting gom-sensor-port daemon: #{Time.now}"
+
+  Gom::Remote::Daemon.new(sensor_url, options) do |daemon, path|
+    sp = Gom::SensorPorts.new path, options
+    daemon.sensor_loop { sp.listen }
+  end
+
+rescue Usage => e
+  puts <<-TXT
+
+usage: #{__FILE__} <sensor port URL>
+
+ ## #{e}
+  TXT
+rescue => e
+  puts " ## #{e}\n -> #{e.backtrace.join "\n    "}"
+end
+
+main ARGV
+# vim: syntax=ruby
