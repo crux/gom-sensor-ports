@@ -8,17 +8,12 @@ describe "Gom::SensorPorts" do
     ($gom.stub! :read).with('/gom/sensor-ports.json').and_return(<<-JSON)
       {
         "node": {
-          "uri": "/services/viko/work",
-          "mtime": "2010-01-06T15:14:57+01:00",
-          "ctime": "2010-01-06T15:14:57+01:00",
+          "uri": "/gom-sensor-ports",
           "entries": [
             { "attribute": {
               "name": "status",
-              "node": "/services/viko/work",
-              "value": "<void>",
-              "type": "string",
-              "mtime": "2010-01-07T19:30:36+01:00",
-              "ctime": "2010-01-07T19:30:36+01:00"
+              "node": "/gom-sensor-ports",
+              "value": "<void>", "type": "string"
             } }
           ]
         }
@@ -26,8 +21,10 @@ describe "Gom::SensorPorts" do
     JSON
   end
 
-  it "should dump status" do 
-    station = Gom::SensorPorts.new '/gom/sensor-ports'
-    station.status.should_not == nil
+  describe "#status" do
+    it "should dump status" do 
+      station = Gom::SensorPorts.new '/gom/sensor-ports'
+      station.status.should be
+    end
   end
 end
