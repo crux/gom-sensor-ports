@@ -1,11 +1,9 @@
 # gom-sensor-ports
-
-Easy access over the wire to a remote GOM node. This gem includes a GNP
+Easy UDP/TCP sensor data sending to a remote GOM node. This gem includes a GNP
 callback server, support for automatic observer refreshments and command line
 tools for reading, writing and observing GOM entries.
 
 ## Install
-    
 use the jewler tasks:
 
     $ rake gemspec build install
