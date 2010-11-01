@@ -23,7 +23,14 @@ def main argv
 
   Gom::Remote::Daemon.new(sensor_url, options) do |daemon, path|
     sp = Gom::SensorPorts.new path, options
-    daemon.sensor_loop { sp.listen }
+    daemon.sensor_loop do
+      begin
+        sp.listen 
+      rescue SignalException => e
+        puts "..shutting down on #{e}"
+        :stop
+      end
+    end
   end
 
 rescue Usage => e
