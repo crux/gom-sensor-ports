@@ -14,13 +14,15 @@ module Gom
     def initialize path, options = {}
       @path = path
       @options = Defaults.merge(gnode @path).merge(options)
-      puts " -- new sensor port: #{self.inspect}"
+      #puts " -- new sensor port: #{self.inspect}"
+      Log.info "new sensor port: #{self.inspect}"
 
       redirect_to logfile
     end
 
     def listen
-      puts " -- listen: #{self.inspect}"
+      #puts " -- listen: #{self.inspect}"
+      Log.info "listen: #{self.inspect}"
       self.send "listen_#{mode}"
     end
 
@@ -41,7 +43,7 @@ module Gom
 
     def dispatch_sensor_message line, source = nil
       line.strip!
-      puts "-->#{line}<-- #{source.inspect}"
+      Log.debug "-->#{line}<-- #{source.inspect}"
       key, value = (line.split /\s*[:=]\s*/)
       value.nil? or value.strip!
       # TODO: val might need type conversion
@@ -50,14 +52,14 @@ module Gom
     end
 
     def status
-      puts @options.inspect
+      Log.debug @options.inspect
       "not implemented"
     end
 
     # todo: must go into gom-script gem
     def redirect_to logfile
       (@logfile_fd && @logfile_fd.close) rescue nil
-      puts " -- redirecting stdout/stderr to: #{logfile}"
+      Log.debug "redirecting stdout/stderr to: #{logfile}"
       if logfile == '-'
         if @stdout
           $stderr, $stdout = @stdout, @stderr
@@ -69,7 +71,7 @@ module Gom
         $stderr = $stdout = @logfile_fd
       end
       # first line after redirect
-      puts " -- daemon logile redirect at #{Time.now}"
+      Log.info "daemon logile redirect at #{Time.now}"
     end
   end
 end

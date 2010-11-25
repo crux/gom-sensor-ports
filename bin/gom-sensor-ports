@@ -27,7 +27,7 @@ def main argv
       begin
         sp.listen 
       rescue SignalException => e
-        puts "..shutting down on #{e}"
+        Gom::Log.ex e, "shutting down on <#{e.class}>"
         :stop
       end
     end
@@ -41,7 +41,8 @@ usage: #{__FILE__} <sensor port URL>
  ## #{e}
   TXT
 rescue => e
-  puts " ## #{e}\n -> #{e.backtrace.join "\n    "}"
+  Gom::Log.ex e
+  #puts " ## #{e}\n -> #{e.backtrace.join "\n    "}"
 end
 
 main ARGV
