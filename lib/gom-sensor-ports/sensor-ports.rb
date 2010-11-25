@@ -28,24 +28,33 @@ module Gom
       socket = UDPSocket.new
       socket.bind(interface, sensor_port)
       loop do
-        val, sender = socket.recvfrom(1024)
-        puts "-->#{val}<-- #{sender.inspect}"
-        # TODO: val might need type conversion
-        gom.write "#{@path}:current_value", val.to_s.strip
+        line, source = socket.recvfrom(1024)
+        dispatch_sensor_message line, source
       end
     ensure
       socket.close rescue nil
     end
 
+    def listen_tcp
+      raise "not yet implemented"
+    end
+
+    def dispatch_sensor_message line, source = nil
+      line.strip!
+      puts "-->#{line}<-- #{source.inspect}"
+      key, value = (line.split /\s*[:=]\s*/)
+      value.nil? or value.strip!
+      # TODO: val might need type conversion
+      gom.write "#{@path}:last_sensor_message", line
+      gom.write "#{@path}/keys:#{key}", value
+    end
+
     def status
       puts @options.inspect
-      #t = Net::Telnet::new(
-      #  "Host" => device_ip, "Timeout" => 10, "Prompt" => /[$%#>] \z/n
-      #)
-      #t.login(user, password) { |c| puts c }
       "not implemented"
     end
 
+    # todo: must go into gom-script gem
     def redirect_to logfile
       (@logfile_fd && @logfile_fd.close) rescue nil
       puts " -- redirecting stdout/stderr to: #{logfile}"
@@ -62,7 +71,6 @@ module Gom
       # first line after redirect
       puts " -- daemon logile redirect at #{Time.now}"
     end
-
   end
 end
 
