@@ -56,19 +56,27 @@ module Gom
       "not implemented"
     end
 
-    # todo: must go into gom-script gem
+    # TODO: must go into gom-script gem
     def redirect_to logfile
-      (@logfile_fd && @logfile_fd.close) rescue nil
+      #(@logfile_fd && @logfile_fd.close) rescue nil
       Log.debug "redirecting stdout/stderr to: #{logfile}"
       if logfile == '-'
-        if @stdout
-          $stderr, $stdout = @stdout, @stderr
+        # redirect output back to original stdout/err stream can only be done
+        # after a previous call has stored them in @stdout/@stderr member
+        # variables
+        if (@stdout && @stderr)
+          #$stdout, $stderr = @stdout, @stderr
+          STDOUT.reopen @stdout
+          STDERR.reopen @stderr
         end
       else
-        @stderr, @stdout = $stdout, $stderr
-        @logfile_fd = File.open(logfile, File::WRONLY|File::APPEND|File::CREAT)
-        @logfile_fd.sync = true
-        $stderr = $stdout = @logfile_fd
+        #@stdout, @stderr = STDOUT, STDERR #$stdout, $stderr
+        #@logfile_fd = File.open(logfile, File::WRONLY|File::APPEND|File::CREAT)
+        #@logfile_fd.sync = true
+        ##$stderr = $stdout = @logfile_fd
+        @stdout, @stderr = STDOUT.clone, STDERR.clone
+        STDOUT.reopen logfile, 'a+'
+        STDERR.reopen logfile, 'a+'
       end
       # first line after redirect
       Log.info "daemon logile redirect at #{Time.now}"
