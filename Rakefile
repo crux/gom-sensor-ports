@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "gom-sensor-ports"
     gem.summary = %Q{
-      gateway for barebone TCP/UCP reporting sensors to GOM/HTTP protocoll
+      gateway for barebone TCP/UDP reporting sensors to GOM/HTTP protocoll
     }
     gem.description = %Q{
       This gems implements a gateway server to allow barebone basic sensor
