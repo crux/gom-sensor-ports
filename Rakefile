@@ -1,5 +1,7 @@
-require 'rubygems'
-require 'rake'
+require 'bundler'
+Bundler::GemHelper.install_tasks
+
+__END__
 
 begin
   require 'jeweler'

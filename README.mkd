@@ -4,11 +4,17 @@ callback server, support for automatic observer refreshments and command line
 tools for reading, writing and observing GOM entries.
 
 ## Install
-use the jewler tasks:
+use the bundler tasks:
 
-    $ rake gemspec build install
+    $ rake build install 
+
+optional:
+
+    $ rake release
 
 ## Dependencies 
+
+see Gemfile
 
 ## Note on Patches/Pull Requests
  
