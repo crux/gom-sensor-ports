@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.version     = Gom::SensorPorts::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['art+com/dirk luesebrink']
-  s.date        = '2012-01-18'
   s.email       = ['dirk.luesebrink@artcom.de']
   s.homepage    = 'http://github.com/crux/gom-sensor-ports'
   s.summary     = %q{
