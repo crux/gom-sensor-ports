@@ -1,9 +1,9 @@
 #$:.unshift(File.dirname(__FILE__))
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rubygems'
-require 'gom-sensor-ports'
 require 'rspec'
 require 'fakeweb'
+require 'gom-sensor-ports'
 
 RSpec.configure do |config|
   config.before :each do

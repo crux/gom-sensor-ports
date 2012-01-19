@@ -1,5 +1,11 @@
+require 'applix/oattr'
+require 'gom/remote'
+require 'gom/log'
+
 module Gom
   class SensorPorts < Gom::Remote::Entry
+
+    VERSION = '0.2.2'
 
     Defaults = {
       :logfile      => '-',
