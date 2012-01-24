@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'applix'
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'gom-sensor-ports'
+
+Defaults = { :verbose => false }
+
+Applix.main(ARGV, Defaults) do
+
+  prolog do |*args, opts|
+  end
+
+  # example: gom-sensor-port serve /gom/sensors/udp
+  handle(:serve) do |*args, options|
+    puts "args: #{args.inspect}"
+    puts "opts: #{options}"
+   # @ncr.push([Integer(Array(args).first)] * 512)
+    path, _ = *args
+    gsp = Gom::SensorPorts.new(path, options)
+    gsp.serve
+  end
+end
+
+# vim: syntax=ruby

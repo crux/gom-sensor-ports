@@ -1,11 +1,10 @@
 require 'applix/oattr'
 require 'gom/remote'
 require 'gom/log'
+require 'gom/sensor_ports/version'
 
 module Gom
-  class SensorPorts < Gom::Remote::Entry
-
-    VERSION = '0.2.2'
+  class SensorPorts #< Gom::Remote::Entry
 
     Defaults = {
       :logfile      => '-',
@@ -17,13 +16,30 @@ module Gom
     include OAttr
     oattr :logfile, :interface, :sensor_port, :mode
 
+    # TODO: temporarily here from gom-script
+    def find_gom_node path
+      json = (Gom::Remote.connection.read "#{path}.json")
+      (JSON.parse json)["node"]["entries"].select do |entry|
+        # 1. select attribute entries
+        entry.has_key? "attribute"
+      end.inject({}) do |h, a|
+          # 2. make it a key, value list
+          h[a["attribute"]["name"].to_sym] = a["attribute"]["value"]
+          h
+      end
+    end
+
     def initialize path, options = {}
       @path = path
-      @options = Defaults.merge(gnode @path).merge(options)
+      @options = Defaults.merge(find_gom_node @path).merge(options)
       #puts " -- new sensor port: #{self.inspect}"
       Log.info "new sensor port: #{self.inspect}"
 
-      redirect_to logfile
+      #redirect_to logfile
+    end
+
+    def serve *args#path, opts = {}
+      puts " -- #{self}: #{args.inspect}"
     end
 
     def listen
@@ -53,8 +69,8 @@ module Gom
       key, value = (line.split /\s*[:=]\s*/)
       value.nil? or value.strip!
       # TODO: val might need type conversion
-      gom.write "#{@path}:last_sensor_message", line
-      gom.write "#{@path}/keys:#{key}", value
+      Gom::Remote.connection.write "#{@path}:last_sensor_message", line
+      Gom::Remote.connection.write "#{@path}/keys:#{key}", value
     end
 
     def status

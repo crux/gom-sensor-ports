@@ -3,10 +3,6 @@ source :rubygems
 # Specify your gem's dependencies in gom-script.gemspec
 gemspec
 
-gem 'applix'
-gem 'gom-core'
-gem 'gom-script'
-
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:

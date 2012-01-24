@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require 'gom/sensor_ports'
+require 'gom/sensor_ports/version'
 
 Gem::Specification.new do |s|
   s.name        = 'gom-sensor-ports'
@@ -20,6 +20,11 @@ Gem::Specification.new do |s|
     binary number once every second to an UCP port
   }
   #s.rubyforge_project = "gom-core"
+
+  s.add_dependency 'gom-core'
+  s.add_dependency 'gom-script'
+  s.add_dependency 'daemons'
+
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
