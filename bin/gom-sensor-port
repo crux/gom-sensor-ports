@@ -8,6 +8,7 @@ require 'gom-sensor-ports'
 
 Defaults = { :verbose => false }
 
+
 Applix.main(ARGV, Defaults) do
 
   prolog do |*args, opts|
@@ -17,10 +18,10 @@ Applix.main(ARGV, Defaults) do
   handle(:serve) do |*args, options|
     puts "args: #{args.inspect}"
     puts "opts: #{options}"
-   # @ncr.push([Integer(Array(args).first)] * 512)
     path, _ = *args
-    gsp = Gom::SensorPorts.new(path, options)
-    gsp.serve
+    _, node_path = (Gom::Remote::Connection.init path)
+    gsp = Gom::SensorPort.new(node_path, options)
+    gsp.listen
   end
 end
 

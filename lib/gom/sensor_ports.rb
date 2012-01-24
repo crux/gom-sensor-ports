@@ -1,6 +1,7 @@
 require 'applix/oattr'
 require 'gom/remote'
 require 'gom/log'
+require 'gom/sensor_port'
 require 'gom/sensor_ports/version'
 
 module Gom
@@ -39,7 +40,8 @@ module Gom
     end
 
     def serve *args#path, opts = {}
-      puts " -- #{self}: #{args.inspect}"
+      Log.info "listen: #{self.inspect}"
+      self.send "listen_#{mode}"
     end
 
     def listen
