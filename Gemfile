@@ -15,4 +15,3 @@ group :development, :test do
     gem 'ruby-debug19', :platforms => :mri_19, :require => 'ruby-debug'
     gem 'ruby-debug-base19', :platforms => :mri_19
 end
-

@@ -107,4 +107,3 @@ module Gom
     end
   end
 end
-

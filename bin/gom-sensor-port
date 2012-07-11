@@ -24,5 +24,3 @@ Applix.main(ARGV, Defaults) do
     gsp.listen
   end
 end
-
-# vim: syntax=ruby
