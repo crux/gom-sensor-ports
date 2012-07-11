@@ -5,7 +5,6 @@ require 'gom/sensor_ports/version'
 Gem::Specification.new do |s|
   s.name        = 'gom-sensor-ports'
   s.version     = Gom::SensorPorts::VERSION
-  s.platform    = Gem::Platform::RUBY
   s.authors     = ['art+com/dirk luesebrink']
   s.email       = ['dirk.luesebrink@artcom.de']
   s.homepage    = 'http://github.com/crux/gom-sensor-ports'
@@ -19,12 +18,23 @@ Gem::Specification.new do |s|
     example, a power sensor might just broadcast a four byte floating point
     binary number once every second to an UCP port
   }
-  #s.rubyforge_project = "gom-core"
 
+  s.add_dependency 'daemons'
   s.add_dependency 'gom-core'
   s.add_dependency 'gom-script'
-  s.add_dependency 'daemons'
 
+  # development section
+  #
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rspec-mocks'
+  s.add_development_dependency 'guard'
+  s.add_development_dependency 'guard-rspec'
+  s.add_development_dependency 'growl'
+  if RUBY_PLATFORM.match /java/i
+    s.add_development_dependency 'ruby-debug'
+  else
+    s.add_development_dependency 'debugger'
+  end
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
