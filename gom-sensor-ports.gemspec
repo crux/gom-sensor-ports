@@ -20,8 +20,8 @@ Gem::Specification.new do |s|
   }
 
   s.add_dependency 'daemons'
-  s.add_dependency 'gom-core'
-  s.add_dependency 'gom-script'
+  s.add_dependency 'gom-core', '~>0.2.2'
+  s.add_dependency 'gom-script', '~>0.2.2'
 
   # development section
   #
