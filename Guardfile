@@ -6,7 +6,6 @@ guard 'rspec', :version => 2, :cli => '-d' do
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
 
   watch('spec/spec_helper.rb')  { "spec" }
-  watch('lib/gom/sensor_ports.rb')  { "spec" }
   watch('*.gemspec')  { "spec" }
   watch('Gemfile')  { "spec" }
 end
