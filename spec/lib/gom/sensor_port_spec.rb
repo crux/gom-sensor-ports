@@ -28,9 +28,9 @@ describe "Gom::SensorPort" do
     describe "#dispatch_sensor_message" do
       it "writes sensor value to gom" do
         $gom.should_receive(:write).
-          with("#{path}:last_sensor_message", "foo:123")
+          with("#{path}:raw", "foo:123")
         $gom.should_receive(:write).
-          with("#{path}/keys:foo", "123")
+          with("#{path}/values:foo", "123")
         station.dispatch_sensor_message "foo:123"
       end
     end

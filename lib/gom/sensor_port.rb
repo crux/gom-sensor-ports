@@ -58,8 +58,8 @@ module Gom
       key, value = (line.split /\s*[:=]\s*/)
       value.nil? or value.strip!
       # TODO: val might need type conversion
-      Gom::Remote.connection.write "#{@path}:last_sensor_message", line
-      Gom::Remote.connection.write "#{@path}/keys:#{key}", value
+      Gom::Remote.connection.write "#{@path}:raw", line
+      Gom::Remote.connection.write "#{@path}/values:#{key}", value
     end
 
     # TODO: temporarily here from gom-script
