@@ -43,7 +43,7 @@ describe "Gom::SensorPort" do
       end
 
       it "configures sensor port on 76001" do
-        @station.port.should == 76001
+        @station.port.should == 44470
       end
     end
   end

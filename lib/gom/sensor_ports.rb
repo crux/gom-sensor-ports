@@ -1,3 +1,4 @@
+__END__
 require 'applix/oattr'
 require 'gom/remote'
 require 'gom/log'

@@ -1,12 +1,18 @@
 require 'socket'
+require 'applix/oattr'
+require 'gom/remote'
 
 module Gom
   class SensorPort 
+
+    # GOM default Logger instance
+    Log = Gom::Logger.new
 
     Defaults = {
       :interface  => '0.0.0.0',
       :port       => 44470,
       :mode       => :udp,
+      :verbose    => false,
     }
 
     include OAttr
@@ -16,7 +22,13 @@ module Gom
       @path = path
       @options = Defaults.merge(find_gom_node @path).merge(options)
       #puts " -- new sensor port: #{self.inspect}"
+
+      verbose? and (Log.level = ::Logger::DEBUG)
       Log.info "new sensor port: #{self.inspect}"
+    end
+
+    def verbose?
+      @options[:verbose] || @options[:v]
     end
 
     def listen

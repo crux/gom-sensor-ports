@@ -4,7 +4,7 @@ require 'rubygems'
 require 'applix'
 
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'gom-sensor-ports'
+require 'gom/sensor_port'
 
 Defaults = { :verbose => false }
 
