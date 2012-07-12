@@ -1,9 +1,9 @@
 #$:.unshift(File.dirname(__FILE__))
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'fakeweb'
-require 'gom-sensor-ports'
+require 'gom/sensor_port'
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.before :each do
     FakeWeb.allow_net_connect = false
 
