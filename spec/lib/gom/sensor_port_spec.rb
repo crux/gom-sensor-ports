@@ -4,7 +4,7 @@ describe "Gom::SensorPort" do
   context "given no options" do
 
     let(:path) { '/gom-sensor-port' }
-    let(:station) { Gom::SensorPort.new "#{path}" }
+    let(:station) { Gom::SensorPort.new path }
     let(:json) { <<-JSON
       {
         "node": {

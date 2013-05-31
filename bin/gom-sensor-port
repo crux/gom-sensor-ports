@@ -9,14 +9,14 @@ require 'gom/sensor_port'
 Defaults = { :verbose => false }
 
 def usage
-  puts "#{__FILE__} serve <gom sensor node URL>"
+  puts "#{__FILE__} serve <GOM URL, e.g: http://gom.dev.artcom.de/sensors/udp>"
 end
 
 Applix.main(ARGV, Defaults) do
 
   any { usage }
 
-  # example: gom-sensor-port serve /gom/sensors/udp
+  # example: gom-sensor-port serve http://gom.dev.artcom.de/sensors/udp
   handle(:serve) do |*args, options|
     puts "args: #{args.inspect}"
     puts "opts: #{options}"

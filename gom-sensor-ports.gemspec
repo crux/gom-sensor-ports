@@ -9,14 +9,16 @@ Gem::Specification.new do |s|
   s.email       = ['dirk.luesebrink@artcom.de']
   s.homepage    = 'http://github.com/crux/gom-sensor-ports'
   s.summary     = %q{
-    gateway for barebone TCP/UCP reporting sensors to GOM/HTTP protocoll
+    gateway for barebone TCP/UCP reporting sensors to GOM/HTTP protocol
   }
   s.description = %q{ 
-    This gems implements a gateway server to allow barebone basic sensor
-    components to report state change updates as simple protocol free udates
-    over TCP/UDP ports without the 'overhead' of the HTTP protocoll. For
-    example, a power sensor might just broadcast a four byte floating point
-    binary number once every second to an UCP port
+    Implements a gateway server to allow barebone basic sensor components to
+    report state change updates as simple via TCP/UDP ports without the
+    'overhead' of the HTTP protocol. A power sensor for example might just
+    broadcast a four byte floating point binary number once every second to an
+    UDP port or an arduino board sends a UDP datagram whenever a button is
+    pushed. You get the idea, this is how to bring embedded devices into the
+    world of HTTP and Javascript...
   }
 
   s.add_dependency 'daemons'

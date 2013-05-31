@@ -1,9 +1,44 @@
 # gom-sensor-ports
+
 Easy UDP/TCP sensor data sending to a remote GOM node. This gem includes a GNP
 callback server, support for automatic observer refreshments and command line
 tools for reading, writing and observing GOM entries.
 
+## Usage
+
+The gem provides a daemon which connects your sensor to the GOM HTTP update
+protocol. You can start the daemon from the command line with its GOM URL:
+
+  $ gom-sensor-port http://gom.dev.artcom.de/sensor
+
+The sensor will load its configuration from that GOM node. The configuration
+values and their defauls are: 
+
+      interface: '0.0.0.0'
+      port:       44470
+      verbose:    false
+      mode:       :udp
+
+(Note: only udp mode is currently implemented)
+Any of these defaults can be change from the command line:
+
+  $ gom-sensor-port --interface=1.1.1.23 http://gom.dev.artcom.de/sensor
+
+gom-sensor-port will than listen to incoming sensor packages and interpret the
+incoming messages as simple key value pair which it writes to the GOM:
+
+received from sensor: 
+    
+    foo:123
+
+written to GOM:
+
+    /sensor:raw = 'foo:123'
+    /sensor/values:foo = '123'
+
+
 ## Install
+
 use the bundler tasks:
 
     $ rake build install 
@@ -23,9 +58,10 @@ see Gemfile
 * Add tests for it. This is important so I don't break it in a
   future version unintentionally.
 * Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
+  (if you want to have your own version, that is fine but bump version in a
+  commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
 ## Copyright
 
-Copyright (c) 2010 art+com AG/dirk luesebrink. See LICENSE for details.
+Copyright (c) 2010/13 art+com AG/dirk luesebrink. See LICENSE for details.

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gom-sensor-ports (0.2.2)
+    gom-sensor-ports (0.2.4)
       daemons
       gom-core (~> 0.2.2)
       gom-script (~> 0.2.2)
@@ -36,7 +36,7 @@ GEM
       thor (>= 0.14.6)
     guard-rspec (1.2.0)
       guard (>= 1.1)
-    json (1.7.3)
+    json (1.7.7)
     listen (0.4.7)
       rb-fchange (~> 0.0.5)
       rb-fsevent (~> 0.9.1)
@@ -44,7 +44,7 @@ GEM
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
       gem_plugin (~> 0.2.3)
-    rack (1.4.1)
+    rack (1.5.2)
     rb-fchange (0.0.5)
       ffi
     rb-fsevent (0.9.1)
